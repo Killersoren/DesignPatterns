@@ -27,7 +27,7 @@ namespace DesignPaterns.CommandPattern
             keybinds.Add(Keys.D, new MoveCommand(new Vector2(1, 0)));
             keybinds.Add(Keys.A, new MoveCommand(new Vector2(-1, 0)));
             keybinds.Add(Keys.Space, new AttackCommand());
-            keybinds.Add(Keys.J, new JumpCommand());
+            keybinds.Add(Keys.J, new JumpCommand(new Vector2(0, -500)));
 
 
 
