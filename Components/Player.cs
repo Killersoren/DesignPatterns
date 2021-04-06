@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using DesignPaterns.CommandPattern;
@@ -31,6 +31,7 @@ namespace DesignPaterns
             canShoot = true;
             canJump = true;
             InputHandler.Instance.Entity = this;
+            
         }
         public void Move(Vector2 velocity)
         {

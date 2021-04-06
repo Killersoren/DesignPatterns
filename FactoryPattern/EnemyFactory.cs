@@ -1,4 +1,4 @@
-﻿//using Microsoft.Xna.Framework;
+//using Microsoft.Xna.Framework;
 //using DesignPaterns.ComponentPatern;
 //using DesignPaterns.Components;
 //using System;

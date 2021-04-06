@@ -1,4 +1,4 @@
-﻿//using DesignPaterns.ComponentPatern;
+//using DesignPaterns.ComponentPatern;
 //using DesignPaterns.FactoryPattern;
 //using System;
 //using System.Collections.Generic;
