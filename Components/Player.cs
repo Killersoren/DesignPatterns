@@ -12,34 +12,24 @@ namespace DesignPaterns
 {
     class Player: Component
     {
-        //private Texture2D sprite;
-        //private Transform transform;
-
-
         private float speed;
         private SpriteRenderer spriteRenderer;
         private bool canShoot;
         private bool canJump;
 
         private float shootTime;
-        private float JumpTime;
+        private float jumpTime;
 
         private float cooldown = 1;
 
-        // private Vector2 origin;
+        private Vector2 gravityVelocity;
+        private Vector2 gravityAcceleration = new Vector2(0.0f,20f);
 
-        //public Player(Vector2 startPosition)
-        //{
-        //    //transform = new Transform();
-        //    //transform.Position = startPosition;
-        //    this.speed = 100;
-        //}
         public Player()
         {
-            //transform = new Transform();
-            //transform.Position = startPosition;
-            this.speed = 100;
+            this.speed = 400;
             canShoot = true;
+            canJump = true;
             InputHandler.Instance.Entity = this;
         }
         public void Move(Vector2 velocity)
@@ -49,7 +39,6 @@ namespace DesignPaterns
                 velocity.Normalize();
             }
             velocity *= speed;
-            //transform.Translate(velocity * Game1.Instance.delta);
             GameObject.Transform.Translate(velocity * Game1.Instance.delta);
 
         }
@@ -67,7 +56,17 @@ namespace DesignPaterns
         }
         public override void Update(GameTime gameTime)
         {
+            // gravity
+            gravityVelocity += gravityAcceleration;
+            GameObject.Transform.Translate(gravityVelocity * Game1.Instance.delta);
+            //
             shootTime += Game1.Instance.delta;
+            jumpTime += Game1.Instance.delta;
+
+            if (jumpTime >= cooldown)
+            {
+                canJump = true;
+            }
             if (shootTime >= cooldown)
             {
                 canShoot = true;
@@ -93,20 +92,20 @@ namespace DesignPaterns
            
 
         }
-        public void Jump()
+        public void Jump(Vector2 velocity)
         {
+            //enable jump when player is standing on a platform
             if (canJump)
             {
                 canJump = false;
-                JumpTime = 0;
-                //GameObject laserObject = LaserFactory.Instance.Create("Player");
-                //laserObject.Transform.Position = GameObject.Transform.Position;
-                //laserObject.Transform.Position += new Vector2(-3, -(spriteRenderer.Sprite.Height + 40));
-                ////Game1.Instance.AddGameObject(laserObject);
+                //jumpTime = 0;
+                gravityVelocity = velocity;
+                if (velocity != Vector2.Zero)
+                {
+                    velocity.Normalize();
+                }
+                GameObject.Transform.Translate(velocity * Game1.Instance.delta);
             }
-
-
         }
-     
     }
 }
