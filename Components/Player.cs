@@ -7,6 +7,8 @@ using DesignPaterns.FactoryPattern;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using DesignPaterns.BuildPattern;
+using DesignPatterns;
 
 namespace DesignPaterns
 {
@@ -52,7 +54,6 @@ namespace DesignPaterns
         public override void Start()
         {
             SpriteRenderer sr = (SpriteRenderer)GameObject.GetComponent("SpriteRenderer");
-            //sr.SetSprite("worker");
             sr.Origin = new Vector2(sr.Sprite.Width/2, (sr.Sprite.Height/2)+35);
         }
         public override void Update(GameTime gameTime)
