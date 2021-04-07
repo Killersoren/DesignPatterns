@@ -36,7 +36,7 @@ namespace DesignPaterns
         public float delta;
         private List<GameObject> gameObjects = new List<GameObject>();
         private float spawnTime;
-        private float cooldown = 5;
+        private float cooldown = 2;
         private Random rnd = new Random();
 
         private static Vector2 screensize;
@@ -61,11 +61,6 @@ namespace DesignPaterns
 
             Director director = new Director(new PlayerBuilder());
             gameObjects.Add(director.Construct());
-
-            //gameObjects.Add(PlatformFactory.Instance.Create("Blue"));
-
-            //gameObjects.Add(PlatformFactory.Instance.Create("Black"));
-
 
             for (int i = 0; i < gameObjects.Count; i++)
             {
@@ -102,7 +97,7 @@ namespace DesignPaterns
             {
                 gameObjects[i].Update(gameTime);
             }
-            SpawnEnemy();
+            SpawnPlatforms();
             base.Update(gameTime);
         }
 
@@ -131,7 +126,7 @@ namespace DesignPaterns
         {
             gameObjects.Remove(go);
         }
-        private void SpawnEnemy()
+        private void SpawnPlatforms()
         {
             spawnTime += delta;
             if (spawnTime >= cooldown)
