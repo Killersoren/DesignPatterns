@@ -34,11 +34,11 @@ namespace DesignPaterns.FactoryPattern
             {
                 case "Blue":
                     sr.SetSprite("bluebox");
-                    go.AddComponent(new Platform(0, new Vector2(0, 0)));
+                    go.AddComponent(new Platform(50, new Vector2(1, 2)));
                     break;
                 case "Black":
                     sr.SetSprite("blackbox");
-                    go.AddComponent(new Platform(0, new Vector2(0, 0)));
+                    go.AddComponent(new Platform(100, new Vector2(1, 2)));
                     break;
             }
             return go;

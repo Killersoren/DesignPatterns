@@ -47,8 +47,10 @@ namespace DesignPaterns
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            
             IsMouseVisible = true;
-
+            _graphics.PreferredBackBufferWidth = 1400;
+            _graphics.PreferredBackBufferHeight = 800;
             screensize = new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             _graphics.ApplyChanges();
         }
@@ -60,9 +62,9 @@ namespace DesignPaterns
             Director director = new Director(new PlayerBuilder());
             gameObjects.Add(director.Construct());
 
-            gameObjects.Add(PlatformFactory.Instance.Create("Blue"));
+            //gameObjects.Add(PlatformFactory.Instance.Create("Blue"));
 
-            gameObjects.Add(PlatformFactory.Instance.Create("Black"));
+            //gameObjects.Add(PlatformFactory.Instance.Create("Black"));
 
 
             for (int i = 0; i < gameObjects.Count; i++)
@@ -100,7 +102,7 @@ namespace DesignPaterns
             {
                 gameObjects[i].Update(gameTime);
             }
-            //SpawnEnemy();
+            SpawnEnemy();
             base.Update(gameTime);
         }
 
@@ -129,16 +131,16 @@ namespace DesignPaterns
         {
             gameObjects.Remove(go);
         }
-        //private void SpawnEnemy()
-        //{
-        //    spawnTime += delta;
-        //    if (spawnTime >= cooldown)
-        //    {
-        //        GameObject go = EnemyPool.Instance.GetObject();
-        //        go.Transform.Position = new Vector2(rnd.Next(0,GraphicsDevice.Viewport.Width),0);
-        //        gameObjects.Add(go);
-        //        spawnTime = 0;
-        //    }
-        //}
+        private void SpawnEnemy()
+        {
+            spawnTime += delta;
+            if (spawnTime >= cooldown)
+            {
+                GameObject go = PlatformPool.Instance.GetObject();
+                go.Transform.Position = new Vector2(rnd.Next(0, GraphicsDevice.Viewport.Width), 0);
+                gameObjects.Add(go);
+                spawnTime = 0;
+            }
+        }
     }
 }

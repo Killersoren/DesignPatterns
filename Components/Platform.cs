@@ -18,19 +18,19 @@ namespace DesignPaterns.Components
 
         public override void Update(GameTime gameTime)
         {
-            //Move();
+            Move();
             //Destroy();
         }
-        //private void Move()
-        //{
-        //    GameObject.Transform.Translate(velocity * speed * Game1.Instance.delta);
-        //}
-        //private void Destroy()
-        //{
-        //    if (GameObject.Transform.Position.Y > Game1.Instance.GraphicsDevice.Viewport.Height)
-        //    {
-        //        PlatformPool.Instance.RealeaseObject(GameObject);
-        //    }
-        //}
+        private void Move()
+        {
+            GameObject.Transform.Translate(velocity * speed * Game1.Instance.delta);
+        }
+        private void Destroy()
+        {
+            if (GameObject.Transform.Position.Y > Game1.Instance.GraphicsDevice.Viewport.Height)
+            {
+                PlatformPool.Instance.RealeaseObject(GameObject);
+            }
+        }
     }
 }
