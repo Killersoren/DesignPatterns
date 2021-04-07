@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using DesignPaterns.ComponentPatern;
 using DesignPaterns.ObserverPattern;
+using Microsoft.Xna.Framework.Content;
 
 namespace DesignPatterns
 {

@@ -9,6 +9,7 @@ using DesignPaterns.FactoryPattern;
 using DesignPaterns.ObjectPool;
 using System;
 using System.Collections.Generic;
+using DesignPatterns;
 
 namespace DesignPaterns
 {
@@ -38,11 +39,18 @@ namespace DesignPaterns
         private float cooldown = 5;
         private Random rnd = new Random();
 
-        private Game1()
+        private static Vector2 screensize;
+
+        public static Vector2 Screensize { get => screensize; set => screensize = value; }
+
+        public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            screensize = new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+            _graphics.ApplyChanges();
         }
 
         protected override void Initialize()
@@ -51,6 +59,11 @@ namespace DesignPaterns
 
             Director director = new Director(new PlayerBuilder());
             gameObjects.Add(director.Construct());
+
+            gameObjects.Add(PlatformFactory.Instance.Create("Blue"));
+
+            gameObjects.Add(PlatformFactory.Instance.Create("Black"));
+
 
             for (int i = 0; i < gameObjects.Count; i++)
             {
@@ -67,6 +80,9 @@ namespace DesignPaterns
             {
                 gameObjects[i].Start();
             }
+
+            
+
             // player.Loadcontent(Content);
             // TODO: use this.Content to load your game content here
         }
@@ -99,6 +115,9 @@ namespace DesignPaterns
             {
                 gameObjects[i].Draw(_spriteBatch);
             }
+
+            
+
             _spriteBatch.End();
             base.Draw(gameTime);
         }
