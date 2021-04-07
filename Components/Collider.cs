@@ -40,7 +40,7 @@ namespace DesignPatterns
         {
             this.origin = spriteRenderer.Origin;
             this.size = new Vector2(spriteRenderer.Sprite.Width, spriteRenderer.Sprite.Height);
-            texture = Game1.Instance.Content.Load<Texture2D>("CollisionBoxRed");
+            texture = Game1.Instance.Content.Load<Texture2D>("CollisionBox");
         }
 
         public void OnCollisionEnter(Collider other)

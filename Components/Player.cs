@@ -52,7 +52,7 @@ namespace DesignPaterns
         public override void Start()
         {
             SpriteRenderer sr = (SpriteRenderer)GameObject.GetComponent("SpriteRenderer");
-            sr.SetSprite("worker");
+            //sr.SetSprite("worker");
             sr.Origin = new Vector2(sr.Sprite.Width/2, (sr.Sprite.Height/2)+35);
         }
         public override void Update(GameTime gameTime)
