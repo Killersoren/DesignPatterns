@@ -60,11 +60,7 @@ namespace DesignPaterns
             spriteRenderer = (SpriteRenderer)GameObject.GetComponent("SpriteRenderer");
 
         }
-        //public override void Start()
-        //{
-        //    SpriteRenderer sr = (SpriteRenderer)GameObject.GetComponent("SpriteRenderer");
-        //    sr.Origin = new Vector2(sr.Sprite.Width/2, (sr.Sprite.Height/2)+35);
-        //}
+ 
         public override void Update(GameTime gameTime)
         {
             // gravity
@@ -73,19 +69,9 @@ namespace DesignPaterns
                 gravityVelocity += gravityAcceleration;
                 GameObject.Transform.Translate(gravityVelocity * Game1.Instance.delta);
             }
-            //
             shootTime += Game1.Instance.delta;
             jumpTime += Game1.Instance.delta;
-            //if (GameObject.Transform.Position.Y >= Game1.Instance.GraphicsDevice.Viewport.Height)
-            //{
-            //    Debug.WriteLine("baa");
-            //    GameObject.Transform.Position = new Vector2(Game1.Instance.GraphicsDevice.Viewport.Height, GameObject.Transform.Position.Y);
-            //}
-
-            //if (GameObject.Transform.Position.Y <= -Height)
-            //{
-            //    GameObject.Destroy();
-            //}
+           
 
             if (jumpTime >= cooldown)
             {
@@ -139,9 +125,9 @@ namespace DesignPaterns
            
             if (gameEvent.Title == "Collision" && component.GameObject.Tag == "Platform")
             {
-                if (component.GameObject.Transform.Position.Y >= (this.GameObject.Transform.Position.Y)-20) // it works =?
+                if (component.GameObject.Transform.Position.Y >= (this.GameObject.Transform.Position.Y)-20)
                 {
-                    if (this.GameObject.Transform.Position.X <= (component.GameObject.Transform.Position.X)+150 && this.GameObject.Transform.Position.X >= (component.GameObject.Transform.Position.X))
+                    if (this.GameObject.Transform.Position.X <= (component.GameObject.Transform.Position.X)+130 && this.GameObject.Transform.Position.X >= (component.GameObject.Transform.Position.X ))
                     {
                         applyGravity = false;
                         this.GameObject.Transform.Position = new Vector2(this.GameObject.Transform.Position.X, (component.GameObject.Transform.Position.Y) - 5);
@@ -150,13 +136,12 @@ namespace DesignPaterns
                     else
                     {
                         applyGravity = true;
-
                     }
-                    // && this.GameObject.Transform.Position.X >= (component.GameObject.Transform.Position.X) - 10
-                    //this.GameObject.Transform.Position.X <= (component.GameObject.Transform.Position.X) + 10);
                 }
             }
             
+
+
 
         }
     }

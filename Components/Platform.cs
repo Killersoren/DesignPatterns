@@ -46,9 +46,9 @@ namespace DesignPaterns.Components
     
         public void Notify(GameEvent gameEvent, Component component)
         {
-            if (gameEvent.Title == "Collision" && component.GameObject.Tag== "Platform")
+            if (gameEvent.Title == "Collision" && component.GameObject.Tag== "Laser")
             {
-             // GameObject.Destroy();
+              GameObject.Destroy();
             }
            
         }

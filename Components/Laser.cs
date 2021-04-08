@@ -20,7 +20,7 @@ namespace DesignPaterns.Components
         }
         public override void Awake()
         {
-            GameObject.Tag = "Platform";
+            GameObject.Tag = "Laser";
         }
 
         public override void Update(GameTime gameTime)
