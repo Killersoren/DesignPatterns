@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace DesignPatterns
 {
-    class Collider: Component
+   public class Collider: Component
     {
         public bool CheckCollisionEvents { get; set; }
 
@@ -36,6 +36,13 @@ namespace DesignPatterns
                     );
             }
         }
+        public Collider(SpriteRenderer spriteRenderer, IGameListner gameListner)
+        {
+            onCollisionEvent.Attach(gameListner);
+            this.origin = spriteRenderer.Origin;
+            this.size = new Vector2(spriteRenderer.Sprite.Width, spriteRenderer.Sprite.Height);
+            texture = Game1.Instance.Content.Load<Texture2D>("CollisionBox");
+        }
 
         public Collider(SpriteRenderer spriteRenderer)
         {
@@ -46,6 +53,7 @@ namespace DesignPatterns
 
         public void OnCollisionEnter(Collider other)
         {
+           
             if (CheckCollisionEvents)
             {
                 if (other != this)

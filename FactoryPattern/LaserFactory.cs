@@ -4,6 +4,7 @@ using DesignPaterns.Components;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using DesignPatterns;
 
 namespace DesignPaterns.FactoryPattern
 {
@@ -41,7 +42,9 @@ namespace DesignPaterns.FactoryPattern
             switch(type)
             {
                 case "Player":
-                    go.AddComponent(playerLaser.Clone());
+                    Laser laserClone = playerLaser.Clone();
+                    go.AddComponent(new Collider(playerRenderer, laserClone) {CheckCollisionEvents = true });
+                    go.AddComponent(laserClone);
                     go.AddComponent(playerRenderer.Clone());
                     break;
             }

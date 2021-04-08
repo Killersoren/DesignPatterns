@@ -9,15 +9,19 @@ using System.Collections.Generic;
 using System.Text;
 using DesignPaterns.BuildPattern;
 using DesignPatterns;
+using DesignPaterns.ObserverPattern;
+using System.Diagnostics;
 
 namespace DesignPaterns
 {
-    class Player: Component
+    class Player: Component, IGameListner
     {
         private float speed;
         private SpriteRenderer spriteRenderer;
         private bool canShoot;
         private bool canJump;
+        private bool applyGravity;
+
 
         private float shootTime;
         private float jumpTime;
@@ -33,37 +37,55 @@ namespace DesignPaterns
             canShoot = true;
             canJump = true;
             InputHandler.Instance.Entity = this;
-            
+
+
         }
         public void Move(Vector2 velocity)
         {
-            if (velocity != Vector2.Zero)
-            {
-                velocity.Normalize();
-            }
-            velocity *= speed;
-            GameObject.Transform.Translate(velocity * Game1.Instance.delta);
+           
+                if (velocity != Vector2.Zero)
+                {
+                    velocity.Normalize();
+                }
+                velocity *= speed;
+                GameObject.Transform.Translate(velocity * Game1.Instance.delta);
 
         }
 
         public override void Awake()
         {
+            GameObject.Tag = "Platform";
+
             GameObject.Transform.Position = new Vector2(Game1.Instance.GraphicsDevice.Viewport.Width / 2, Game1.Instance.GraphicsDevice.Viewport.Height);
             spriteRenderer = (SpriteRenderer)GameObject.GetComponent("SpriteRenderer");
+
         }
-        public override void Start()
-        {
-            SpriteRenderer sr = (SpriteRenderer)GameObject.GetComponent("SpriteRenderer");
-            sr.Origin = new Vector2(sr.Sprite.Width/2, (sr.Sprite.Height/2)+35);
-        }
+        //public override void Start()
+        //{
+        //    SpriteRenderer sr = (SpriteRenderer)GameObject.GetComponent("SpriteRenderer");
+        //    sr.Origin = new Vector2(sr.Sprite.Width/2, (sr.Sprite.Height/2)+35);
+        //}
         public override void Update(GameTime gameTime)
         {
             // gravity
-            gravityVelocity += gravityAcceleration;
-            GameObject.Transform.Translate(gravityVelocity * Game1.Instance.delta);
+            if (applyGravity)
+            {
+                gravityVelocity += gravityAcceleration;
+                GameObject.Transform.Translate(gravityVelocity * Game1.Instance.delta);
+            }
             //
             shootTime += Game1.Instance.delta;
             jumpTime += Game1.Instance.delta;
+            //if (GameObject.Transform.Position.Y >= Game1.Instance.GraphicsDevice.Viewport.Height)
+            //{
+            //    Debug.WriteLine("baa");
+            //    GameObject.Transform.Position = new Vector2(Game1.Instance.GraphicsDevice.Viewport.Height, GameObject.Transform.Position.Y);
+            //}
+
+            //if (GameObject.Transform.Position.Y <= -Height)
+            //{
+            //    GameObject.Destroy();
+            //}
 
             if (jumpTime >= cooldown)
             {
@@ -72,6 +94,7 @@ namespace DesignPaterns
             if (shootTime >= cooldown)
             {
                 canShoot = true;
+
             }
 
         }
@@ -99,8 +122,9 @@ namespace DesignPaterns
             //enable jump when player is standing on a platform
             if (canJump)
             {
+                applyGravity = true;
                 canJump = false;
-                //jumpTime = 0;
+                jumpTime = 0;
                 gravityVelocity = velocity;
                 if (velocity != Vector2.Zero)
                 {
@@ -108,6 +132,32 @@ namespace DesignPaterns
                 }
                 GameObject.Transform.Translate(velocity * Game1.Instance.delta);
             }
+        }
+
+        public void Notify(GameEvent gameEvent, Component component)
+        {
+           
+            if (gameEvent.Title == "Collision" && component.GameObject.Tag == "Platform")
+            {
+                if (component.GameObject.Transform.Position.Y >= (this.GameObject.Transform.Position.Y)-20) // it works =?
+                {
+                    if (this.GameObject.Transform.Position.X <= (component.GameObject.Transform.Position.X)+150 && this.GameObject.Transform.Position.X >= (component.GameObject.Transform.Position.X))
+                    {
+                        applyGravity = false;
+                        this.GameObject.Transform.Position = new Vector2(this.GameObject.Transform.Position.X, (component.GameObject.Transform.Position.Y) - 5);
+                        canJump = true;
+                    }
+                    else
+                    {
+                        applyGravity = true;
+
+                    }
+                    // && this.GameObject.Transform.Position.X >= (component.GameObject.Transform.Position.X) - 10
+                    //this.GameObject.Transform.Position.X <= (component.GameObject.Transform.Position.X) + 10);
+                }
+            }
+            
+
         }
     }
 }

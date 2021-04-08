@@ -35,6 +35,7 @@ namespace DesignPaterns
         private Vector2 playerStartPos;
         public float delta;
         private List<GameObject> gameObjects = new List<GameObject>();
+        public List<Collider> Colliders { get; set; } = new List<Collider>();
         private float spawnTime;
         private float cooldown = 2;
         private Random rnd = new Random();
@@ -92,12 +93,22 @@ namespace DesignPaterns
             InputHandler.Instance.Execute();
             // TODO: Add your update logic here
 
-          
+
             for (int i = 0; i < gameObjects.Count; i++)
             {
                 gameObjects[i].Update(gameTime);
             }
+
+            Collider[] tmpColliders = Colliders.ToArray();
+            for (int i = 0; i < tmpColliders.Length; i++)
+            {
+                for (int j = 0; j < tmpColliders.Length; j++)
+                {
+                    tmpColliders[i].OnCollisionEnter(tmpColliders[j]);
+                }
+            }
             SpawnPlatforms();
+
             base.Update(gameTime);
         }
 
@@ -120,7 +131,14 @@ namespace DesignPaterns
         }
         public void AddGameObject(GameObject go)
         {
+            go.Awake();
+            go.Start();
             gameObjects.Add(go);
+            Collider c = (Collider)go.GetComponent("Collider");
+            if (c != null)
+            {
+                Colliders.Add(c);
+            }
         }
         public void RemoveGameObject(GameObject go)
         {
@@ -133,7 +151,7 @@ namespace DesignPaterns
             {
                 GameObject go = PlatformPool.Instance.GetObject();
                 go.Transform.Position = new Vector2(rnd.Next(0, GraphicsDevice.Viewport.Width), 0);
-                gameObjects.Add(go);
+                AddGameObject(go);
                 spawnTime = 0;
             }
         }

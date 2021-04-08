@@ -28,7 +28,9 @@ namespace DesignPaterns
         {
 
         }
-        
+        public virtual void Destroy()
+        { 
+        }
 
 
     }

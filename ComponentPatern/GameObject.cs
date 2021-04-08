@@ -60,5 +60,14 @@ namespace DesignPaterns.ComponentPatern
                 }
             }
         }
+
+        public void Destroy()
+        {
+            foreach (Component component in components.Values)
+            {
+                component.Destroy();
+            }
+            Game1.Instance.RemoveGameObject(this);
+        }
     }
 }

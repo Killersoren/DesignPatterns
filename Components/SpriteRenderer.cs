@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DesignPaterns.ComponentPatern
 {
-    class SpriteRenderer: Component
+    public class SpriteRenderer: Component
     {
         public Texture2D Sprite { get; set; }
         public Vector2 Origin { get; set; }
