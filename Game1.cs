@@ -16,7 +16,7 @@ namespace DesignPaterns
     public class Game1 : Game
     {
 
-
+        private SpriteFont font;
         private static Game1 instance;
         public static Game1 Instance
         {
@@ -32,7 +32,6 @@ namespace DesignPaterns
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private Vector2 playerStartPos;
         public float delta;
         private List<GameObject> gameObjects = new List<GameObject>();
         public List<Collider> Colliders { get; set; } = new List<Collider>();
@@ -73,7 +72,8 @@ namespace DesignPaterns
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            font =  Content.Load<SpriteFont>("Font");
+            
             for (int i = 0; i < gameObjects.Count; i++)
             {
                 gameObjects[i].Start();
@@ -124,7 +124,10 @@ namespace DesignPaterns
                 gameObjects[i].Draw(_spriteBatch);
             }
 
-            
+            _spriteBatch.DrawString(font, "Press J to Jump", new Vector2(100, 700), Color.Black);
+            _spriteBatch.DrawString(font, "Press Space to Shoot", new Vector2(100, 720), Color.Black);
+            _spriteBatch.DrawString(font, "Press a/D to Move", new Vector2(100, 740), Color.Black);
+
 
             _spriteBatch.End();
             base.Draw(gameTime);

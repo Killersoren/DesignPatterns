@@ -49,6 +49,13 @@
 /processorParam:TextureFormat=Color
 /build:CollisionBox.png
 
+#begin Font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Font.spritefont
+
 #begin greenbox.png
 /importer:TextureImporter
 /processor:TextureProcessor
